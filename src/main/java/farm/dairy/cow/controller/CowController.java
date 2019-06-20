@@ -1,6 +1,6 @@
 package farm.dairy.cow.controller;
 
-import farm.dairy.cow.dto.CowDto;
+import farm.dairy.cow.dto.CowWithParentAndCalvesDto;
 import farm.dairy.cow.dto.FarmCows;
 import farm.dairy.cow.service.CowService;
 import farm.dairy.cow.validate.CowValidate;
@@ -16,15 +16,15 @@ public class CowController {
     protected CowService cowService;
 
     @PutMapping(value = "/add", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void addCalfToCow(@RequestBody CowDto cowDto) throws Exception {
-        cowValidate.validateAddCalfToCow(cowDto);
-        cowService.addCalfToCow(cowDto);
+    public void addCalfToCow(@RequestBody CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
+        cowValidate.validateAddCalfToCow(cowWithParentAndCalvesDto);
+        cowService.addCalfToCow(cowWithParentAndCalvesDto);
     }
 
     @PostMapping(value = "/delete", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void setEndLifeToCowByCow(@RequestBody CowDto cowDto) throws Exception {
-        cowValidate.validateSetEndLifeToCowByCow(cowDto);
-        cowService.setEndLifeToCowByCowId(cowDto);
+    public void setEndLifeToCowByCow(@RequestBody CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
+        cowValidate.validateSetEndLifeToCowByCow(cowWithParentAndCalvesDto);
+        cowService.setEndLifeToCowByCowId(cowWithParentAndCalvesDto);
     }
 
     @GetMapping(value = "/cows")

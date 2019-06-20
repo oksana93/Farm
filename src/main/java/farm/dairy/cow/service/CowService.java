@@ -1,12 +1,12 @@
 package farm.dairy.cow.service;
 
-import farm.dairy.cow.dto.CowDto;
+import farm.dairy.cow.dto.CowWithParentAndCalvesDto;
 import farm.dairy.cow.dto.FarmCows;
 
 public interface CowService {
-    void addCalfToCow(CowDto cowDto) throws Exception;
+    void addCalfToCow(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception;
 
-    void setEndLifeToCowByCowId(CowDto cowDto) throws Exception;
+    void setEndLifeToCowByCowId(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception;
 
     FarmCows getCowDtoBy();
 }

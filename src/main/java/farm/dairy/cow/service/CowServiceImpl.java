@@ -1,6 +1,7 @@
 package farm.dairy.cow.service;
 
 import farm.dairy.cow.dto.CowDto;
+import farm.dairy.cow.dto.CowWithParentAndCalvesDto;
 import farm.dairy.cow.dto.FarmCows;
 import farm.dairy.cow.model.Cow;
 import farm.dairy.cow.repository.CowRepository;
@@ -18,11 +19,11 @@ public class CowServiceImpl implements CowService {
     @Autowired
     protected CowRepository cowRepository;
 
-    public void addCalfToCow(CowDto cowDto) throws Exception {
-        Cow parentCow = cowDto.getParentCow();
+    public void addCalfToCow(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
+        CowDto parentCow = cowWithParentAndCalvesDto.getParentCow();
         Cow calf = getCalfByParentAndCalfName(
                 parentCow.getCowId(),
-                cowDto.getNickName());
+                cowWithParentAndCalvesDto.getNickName());
         cowRepository.save(calf);
     }
 
@@ -33,8 +34,8 @@ public class CowServiceImpl implements CowService {
         return calf;
     }
 
-    public void setEndLifeToCowByCowId(CowDto cowDto) throws Exception {
-        Cow cow = getCowById(cowDto.getCowId());
+    public void setEndLifeToCowByCowId(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
+        Cow cow = getCowById(cowWithParentAndCalvesDto.getCowId());
         setEndLifeToCow(cow);
     }
 
@@ -52,7 +53,7 @@ public class CowServiceImpl implements CowService {
         List<Cow> cowList = cowRepository.findAll();
         return new FarmCows(
                 cowList.stream()
-                        .map(CowDto::new)
+                        .map(cow -> new CowWithParentAndCalvesDto(cow))
                         .collect(Collectors.toList()));
     }
 }

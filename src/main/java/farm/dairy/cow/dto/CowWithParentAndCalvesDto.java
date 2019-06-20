@@ -2,21 +2,30 @@ package farm.dairy.cow.dto;
 
 import farm.dairy.cow.model.Cow;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-public class CowDto {
+public class CowWithParentAndCalvesDto implements Serializable {
     private UUID cowId;
     private String nickName;
+    private CowDto parentCow;
+    private Set<CowDto> calvesCow;
     private LocalDateTime dateBirth;
     private LocalDateTime dateDeath;
 
-    public CowDto() {
+    public CowWithParentAndCalvesDto() {
     }
 
-    public CowDto(Cow cow) {
+    public CowWithParentAndCalvesDto(Cow cow) {
         this.cowId = cow.getCowId();
         this.nickName = cow.getNickName();
+        this.parentCow = new CowDto(cow.getParentCow());
+        this.calvesCow = cow.getCalvesCow().stream()
+                .map(CowDto::new)
+                .collect(Collectors.toSet());
         this.dateBirth = cow.getDateBirth();
         this.dateDeath = cow.getDateDeath();
     }
@@ -35,6 +44,22 @@ public class CowDto {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    public CowDto getParentCow() {
+        return parentCow;
+    }
+
+    public void setParentCow(CowDto parentCow) {
+        this.parentCow = parentCow;
+    }
+
+    public Set<CowDto> getCalvesCow() {
+        return calvesCow;
+    }
+
+    public void setCalvesCow(Set<CowDto> calvesCow) {
+        this.calvesCow = calvesCow;
     }
 
     public LocalDateTime getDateBirth() {

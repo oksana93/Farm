@@ -1,25 +1,14 @@
 package farm.dairy.cow.dto;
 
-import farm.dairy.cow.model.Cow;
-
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class CowDto {
+public class ParentCowDto implements Serializable {
     private UUID cowId;
     private String nickName;
     private LocalDateTime dateBirth;
     private LocalDateTime dateDeath;
-
-    public CowDto() {
-    }
-
-    public CowDto(Cow cow) {
-        this.cowId = cow.getCowId();
-        this.nickName = cow.getNickName();
-        this.dateBirth = cow.getDateBirth();
-        this.dateDeath = cow.getDateDeath();
-    }
 
     public UUID getCowId() {
         return cowId;
