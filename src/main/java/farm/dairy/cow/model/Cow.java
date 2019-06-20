@@ -2,6 +2,7 @@ package farm.dairy.cow.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -11,15 +12,17 @@ public class Cow {
     private UUID cowId;
     private String nickName;
     private Cow parentCow;
-    private Set<Cow> calvesCow;
+    private Set<Cow> calvesCow = new HashSet<>();
     private LocalDateTime dateBirth;
     private LocalDateTime dateDeath;
 
     public Cow() {
     }
 
-    public Cow(String nickName) {
+    public Cow(String nickName, Cow parentCow) {
         this.nickName = nickName;
+        this.parentCow = parentCow;
+        this.dateBirth = LocalDateTime.now();
     }
 
     @Id

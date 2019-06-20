@@ -4,6 +4,7 @@ import farm.dairy.cow.model.Cow;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -22,7 +23,8 @@ public class CowWithParentAndCalvesDto implements Serializable {
     public CowWithParentAndCalvesDto(Cow cow) {
         this.cowId = cow.getCowId();
         this.nickName = cow.getNickName();
-        this.parentCow = new CowDto(cow.getParentCow());
+        if (Objects.nonNull(cow.getParentCow()))
+            this.parentCow = new CowDto(cow.getParentCow());
         this.calvesCow = cow.getCalvesCow().stream()
                 .map(CowDto::new)
                 .collect(Collectors.toSet());

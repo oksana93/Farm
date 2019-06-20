@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -19,29 +20,33 @@ public class CowServiceImpl implements CowService {
     @Autowired
     protected CowRepository cowRepository;
 
-    public void addCalfToCow(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
-        CowDto parentCow = cowWithParentAndCalvesDto.getParentCow();
+    public void addCalfToCow(CowWithParentAndCalvesDto cowDto) throws Exception {
+        CowDto parentCow = cowDto.getParentCow();
         Cow calf = getCalfByParentAndCalfName(
                 parentCow.getCowId(),
-                cowWithParentAndCalvesDto.getNickName());
+                cowDto.getNickName());
         cowRepository.save(calf);
     }
 
     private Cow getCalfByParentAndCalfName(UUID parentCowId, String calfNickName) throws Exception {
-        Cow calf = new Cow(calfNickName);
         Cow parentCow = getCowById(parentCowId);
-        calf.setParentCow(parentCow);
-        return calf;
+        checkCowIsAlive(parentCow);
+        return new Cow(calfNickName, parentCow);
     }
 
-    public void setEndLifeToCowByCowId(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
-        Cow cow = getCowById(cowWithParentAndCalvesDto.getCowId());
+    private void checkCowIsAlive(Cow cow) throws Exception {
+        if (Objects.nonNull(cow.getDateDeath()))
+            throw new Exception("The cow is dead");
+    }
+
+    public void setEndLifeToCowByCowId(CowWithParentAndCalvesDto cowDto) throws Exception {
+        Cow cow = getCowById(cowDto.getCowId());
         setEndLifeToCow(cow);
     }
 
     private Cow getCowById(UUID parentCowId) throws Exception {
         Optional<Cow> cow = cowRepository.findById(parentCowId);
-        return cow.orElseThrow(() -> new Exception("CowValidate does not exist"));
+        return cow.orElseThrow(() -> new Exception("Cow does not exist"));
     }
 
     private void setEndLifeToCow(Cow cow) {

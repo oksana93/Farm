@@ -21,7 +21,7 @@ public class CowController {
         cowService.addCalfToCow(cowWithParentAndCalvesDto);
     }
 
-    @PostMapping(value = "/delete", produces = {MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/remove", produces = {MediaType.APPLICATION_JSON_VALUE})
     public void setEndLifeToCowByCow(@RequestBody CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
         cowValidate.validateSetEndLifeToCowByCow(cowWithParentAndCalvesDto);
         cowService.setEndLifeToCowByCowId(cowWithParentAndCalvesDto);
