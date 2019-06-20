@@ -29,7 +29,7 @@ public class CowController {
 
     @GetMapping(value = "/cows")
     public FarmCows getCowInfo() {
-        return cowService.getCowDtoBy();
+        return cowService.getAllCow();
     }
 
 }

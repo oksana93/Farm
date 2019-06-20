@@ -54,7 +54,7 @@ public class CowServiceImpl implements CowService {
         cowRepository.save(cow);
     }
 
-    public FarmCows getCowDtoBy() {
+    public FarmCows getAllCow() {
         List<Cow> cowList = cowRepository.findAll();
         return new FarmCows(
                 cowList.stream()

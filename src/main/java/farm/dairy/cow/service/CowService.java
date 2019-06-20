@@ -8,5 +8,5 @@ public interface CowService {
 
     void setEndLifeToCowByCowId(CowWithParentAndCalvesDto cowDto) throws Exception;
 
-    FarmCows getCowDtoBy();
+    FarmCows getAllCow();
 }
