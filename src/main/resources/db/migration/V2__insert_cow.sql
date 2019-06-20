@@ -1,0 +1,1 @@
+insert into COW (cow_id, nick_name) values (uuid_generate_v4(), 'Ева');
