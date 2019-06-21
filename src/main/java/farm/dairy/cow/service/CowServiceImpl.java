@@ -1,10 +1,10 @@
 package farm.dairy.cow.service;
 
-import farm.dairy.cow.dto.CowDto;
-import farm.dairy.cow.dto.CowWithParentAndCalvesDto;
-import farm.dairy.cow.dto.FarmCows;
+import farm.dairy.cow.dto.*;
 import farm.dairy.cow.model.Cow;
+import farm.dairy.cow.model.CowStream;
 import farm.dairy.cow.repository.CowRepository;
+import farm.dairy.cow.repository.CowStreamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +14,17 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 @Service
 public class CowServiceImpl implements CowService {
     @Autowired
     protected CowRepository cowRepository;
+    @Autowired
+    protected CowStreamRepository cowStreamRepository;
 
-    public void addCalfToCow(CowWithParentAndCalvesDto cowDto) throws Exception {
+    public void addCalfToCow(CowWithStructureStream cowDto) throws Exception {
         CowDto parentCow = cowDto.getParentCow();
         Cow calf = getCalfByParentAndCalfName(
                 parentCow.getCowId(),
@@ -39,7 +43,7 @@ public class CowServiceImpl implements CowService {
             throw new Exception("The cow is dead");
     }
 
-    public void setEndLifeToCowByCowId(CowWithParentAndCalvesDto cowDto) throws Exception {
+    public void setEndLifeToCowByCowId(CowWithStructureStream cowDto) throws Exception {
         Cow cow = getCowById(cowDto.getCowId());
         setEndLifeToCow(cow);
     }
@@ -54,11 +58,19 @@ public class CowServiceImpl implements CowService {
         cowRepository.save(cow);
     }
 
-    public FarmCows getAllCow() {
+    public FarmCows getCows() {
         List<Cow> cowList = cowRepository.findAll();
         return new FarmCows(
                 cowList.stream()
-                        .map(cow -> new CowWithParentAndCalvesDto(cow))
+                        .map(CowWithStructure::new)
                         .collect(Collectors.toList()));
+    }
+
+    public FarmCowsStream getStreamCows() {
+        Iterable<CowStream> cowsIterable = cowStreamRepository.findAll();
+        Stream<CowStream> cowsStream = StreamSupport.stream(
+                cowsIterable.spliterator(), true);
+        Stream<CowWithStructureStream> cowWithStructureStream = cowsStream.map(CowWithStructureStream::new);
+        return new FarmCowsStream(cowWithStructureStream);
     }
 }

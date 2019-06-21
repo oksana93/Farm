@@ -5,20 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FarmCows implements Serializable {
-    protected List<CowWithParentAndCalvesDto> cowList = new ArrayList<>();
+    protected List<CowWithStructure> cowList = new ArrayList<>();
 
     public FarmCows() {
     }
 
-    public FarmCows(List<CowWithParentAndCalvesDto> cowList) {
+    public FarmCows(List<CowWithStructure> cowList) {
         this.cowList = cowList;
     }
 
-    public List<CowWithParentAndCalvesDto> getCowList() {
+    public List<CowWithStructure> getCowList() {
         return cowList;
     }
 
-    public void setCowList(List<CowWithParentAndCalvesDto> cowList) {
+    public void setCowList(List<CowWithStructure> cowList) {
         this.cowList = cowList;
     }
 }

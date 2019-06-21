@@ -1,9 +1,9 @@
 package farm.dairy.cow.validate;
 
-import farm.dairy.cow.dto.CowWithParentAndCalvesDto;
+import farm.dairy.cow.dto.CowWithStructureStream;
 
 public interface CowValidate {
-    void validateAddCalfToCow(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception;
+    void validateAddCalfToCow(CowWithStructureStream cowWithStructureStream) throws Exception;
 
-    void validateSetEndLifeToCowByCow(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception;
+    void validateSetEndLifeToCowByCow(CowWithStructureStream cowWithStructureStream) throws Exception;
 }

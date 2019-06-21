@@ -1,20 +1,28 @@
 package farm.dairy.cow.dto;
 
 import farm.dairy.cow.model.Cow;
+import farm.dairy.cow.model.CowStream;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class CowDto {
-    private UUID cowId;
-    private String nickName;
-    private LocalDateTime dateBirth;
-    private LocalDateTime dateDeath;
+    protected  UUID cowId;
+    protected  String nickName;
+    protected  LocalDateTime dateBirth;
+    protected  LocalDateTime dateDeath;
 
     public CowDto() {
     }
 
     public CowDto(Cow cow) {
+        this.cowId = cow.getCowId();
+        this.nickName = cow.getNickName();
+        this.dateBirth = cow.getDateBirth();
+        this.dateDeath = cow.getDateDeath();
+    }
+
+    public CowDto(CowStream cow) {
         this.cowId = cow.getCowId();
         this.nickName = cow.getNickName();
         this.dateBirth = cow.getDateBirth();

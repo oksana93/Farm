@@ -1,6 +1,6 @@
 package farm.dairy.cow.validate;
 
-import farm.dairy.cow.dto.CowWithParentAndCalvesDto;
+import farm.dairy.cow.dto.CowWithStructureStream;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -8,34 +8,33 @@ import java.util.Objects;
 
 @Component
 public class CowValidateImpl implements CowValidate {
-    public void validateAddCalfToCow(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
-        checkObjectExisting(cowWithParentAndCalvesDto);
-        checkParentCow(cowWithParentAndCalvesDto);
-        checkCowNickName(cowWithParentAndCalvesDto);
+    public void validateAddCalfToCow(CowWithStructureStream cowWithStructureStream) throws Exception {
+        checkObjectExisting(cowWithStructureStream);
+        checkParentCow(cowWithStructureStream);
+        checkCowNickName(cowWithStructureStream);
     }
 
-    public void validateSetEndLifeToCowByCow(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
-        checkObjectExisting(cowWithParentAndCalvesDto);
-        checkCowId(cowWithParentAndCalvesDto);
+    public void validateSetEndLifeToCowByCow(CowWithStructureStream cowWithStructureStream) throws Exception {
+        checkObjectExisting(cowWithStructureStream);
+        checkCowId(cowWithStructureStream);
     }
 
-    private void checkParentCow(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
-        if (Objects.isNull(cowWithParentAndCalvesDto.getParentCow())
-                || Objects.isNull(cowWithParentAndCalvesDto.getParentCow().getCowId()))
+    private void checkParentCow(CowWithStructureStream cowWithStructureStream) throws Exception {
+        if (Objects.isNull(cowWithStructureStream.getParentCow()) || Objects.isNull(cowWithStructureStream.getParentCow().getCowId()))
             throw new Exception("Parent not specified");
     }
 
-    private void checkCowNickName(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
-        if (StringUtils.isEmpty(cowWithParentAndCalvesDto.getNickName()))
+    private void checkCowNickName(CowWithStructureStream cowWithStructureStream) throws Exception {
+        if (StringUtils.isEmpty(cowWithStructureStream.getNickName()))
             throw new Exception("NickName not specified");
     }
 
-    private void checkCowId(CowWithParentAndCalvesDto cowWithParentAndCalvesDto) throws Exception {
-        checkObjectExisting(cowWithParentAndCalvesDto.getCowId());
+    private void checkCowId(CowWithStructureStream cowWithStructureStream) throws Exception {
+        checkObjectExisting(cowWithStructureStream.getCowId());
     }
 
     private void checkObjectExisting(Object object) throws Exception {
         if (Objects.isNull(object))
-            throw new Exception("CowWithParentAndCalvesDto is null");
+            throw new Exception("CowWithStructureStream is null");
     }
 }

@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class CowWithParentAndCalvesDto implements Serializable {
+public class CowWithStructure implements Serializable {
     private UUID cowId;
     private String nickName;
     private CowDto parentCow;
@@ -17,10 +17,10 @@ public class CowWithParentAndCalvesDto implements Serializable {
     private LocalDateTime dateBirth;
     private LocalDateTime dateDeath;
 
-    public CowWithParentAndCalvesDto() {
+    public CowWithStructure() {
     }
 
-    public CowWithParentAndCalvesDto(Cow cow) {
+    public CowWithStructure(Cow cow) {
         this.cowId = cow.getCowId();
         this.nickName = cow.getNickName();
         if (Objects.nonNull(cow.getParentCow()))
