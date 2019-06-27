@@ -1,17 +1,40 @@
 package farm.dairy.cow.dto;
 
 import farm.dairy.cow.model.Cow;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 public class CowDto {
-    private UUID cowId;
-    private String nickName;
-    private LocalDateTime dateBirth;
-    private LocalDateTime dateDeath;
+    @Getter
+    @Setter
+    protected UUID cowId;
+    @Getter
+    @Setter
+    protected String nickName;
+    @Getter
+    @Setter
+    protected LocalDateTime dateBirth;
+    @Getter
+    @Setter
+    protected LocalDateTime dateDeath;
 
     public CowDto() {
+    }
+
+    public CowDto(String nickName) {
+        this.cowId = UUID.randomUUID();
+        this.nickName = nickName;
+        this.dateBirth = LocalDateTime.now();
+    }
+
+    public CowDto(UUID cowId, String nickName) {
+        this.cowId = cowId;
+        this.nickName = nickName;
+        this.dateBirth = LocalDateTime.now();
     }
 
     public CowDto(Cow cow) {
@@ -21,35 +44,26 @@ public class CowDto {
         this.dateDeath = cow.getDateDeath();
     }
 
-    public UUID getCowId() {
-        return cowId;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        CowDto cowDto = (CowDto) obj;
+        return cowId.equals(cowDto.cowId);
     }
 
-    public void setCowId(UUID cowId) {
-        this.cowId = cowId;
+    @Override
+    public int hashCode() {
+        return Objects.hash(cowId);
     }
 
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public LocalDateTime getDateBirth() {
-        return dateBirth;
-    }
-
-    public void setDateBirth(LocalDateTime dateBirth) {
-        this.dateBirth = dateBirth;
-    }
-
-    public LocalDateTime getDateDeath() {
-        return dateDeath;
-    }
-
-    public void setDateDeath(LocalDateTime dateDeath) {
-        this.dateDeath = dateDeath;
+    @Override
+    public String toString() {
+        return "CowDto {" +
+                "cowId=" + cowId +
+                ", nickName='" + nickName + '\'' +
+                ", dateBirth=" + dateBirth +
+                ", dateDeath=" + dateDeath +
+                '}';
     }
 }
