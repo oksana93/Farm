@@ -51,11 +51,13 @@ public class CowEntry {
     private CowEntry findCowAmongDaughter(CowDto searchCow) {
         if (cow.getCowId().equals(searchCow.getCowId()))
             return this;
+
+        CowEntry foundCow = null;
         if (firstDaughter != null)
-            return firstDaughter.findCowAmongDaughter(searchCow);
-        if (firstYoungerSister != null)
-            return firstYoungerSister.findCowAmongDaughter(searchCow);
-        return null;
+            foundCow = firstDaughter.findCowAmongDaughter(searchCow);
+        if (foundCow == null && firstYoungerSister != null)
+            foundCow = firstYoungerSister.findCowAmongDaughter(searchCow);
+        return foundCow;
     }
 
     public void setDaughter(CowEntry calfEntry) {
