@@ -1,13 +1,11 @@
 package farm.dairy.cow;
 
 import farm.dairy.cow.dto.CowDto;
+import farm.dairy.cow.dto.CowEntry;
 import farm.dairy.cow.service.CowEntryService;
 import farm.dairy.cow.service.CowEntryServiceImpl;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -15,17 +13,15 @@ import java.util.UUID;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {CowEntryServiceImpl.class})
-@FixMethodOrder(value = MethodSorters.NAME_ASCENDING)
 public class FarmEntryApplicationTest {
-
-    @Autowired
-    private CowEntryService cowEntryService;
 
     @Test
     public void entryTest() throws Exception {
         System.out.println("\nTest 1");
 
+        CowEntryService cowEntryService = createCowEntryService();
         cowEntryService.printAllCow();
+
         CowDto cowMum = new CowDto(UUID.fromString("2f1d156b-8dc2-4fc2-bb8c-95613f7d5251"), "Mum");
         CowDto calfFirst = new CowDto(UUID.fromString("2757a9b2-0987-432f-9e12-2335ef90d308"), "Calf 1");
         CowDto calfSecond = new CowDto(UUID.fromString("d826e09c-d902-4e92-917b-1cd5de331c84"), "Calf 2");
@@ -68,6 +64,8 @@ public class FarmEntryApplicationTest {
     public void entryTestSecond() throws Exception {
         System.out.println("\nTest 2");
 
+        CowEntryService cowEntryService = createCowEntryService();
+
         cowEntryService.printAllCow();
         CowDto cowMum = new CowDto(UUID.fromString("2f1d156b-8dc2-4fc2-bb8c-95613f7d5251"), "Mum");
         CowDto calfFirst = new CowDto(UUID.fromString("2757a9b2-0987-432f-9e12-2335ef90d308"), "Calf 1");
@@ -86,6 +84,8 @@ public class FarmEntryApplicationTest {
     @Test
     public void entryTestThird() throws Exception {
         System.out.println("\nTest 3");
+
+        CowEntryService cowEntryService = createCowEntryService();
 
         cowEntryService.printAllCow();
         CowDto cowMum = new CowDto(UUID.fromString("2f1d156b-8dc2-4fc2-bb8c-95613f7d5251"), "Mum");
@@ -115,5 +115,12 @@ public class FarmEntryApplicationTest {
         cowEntryService.addCalfToCow(calfSeventh, calfThird);
 
         cowEntryService.printAllCow();
+    }
+
+    private CowEntryService createCowEntryService() {
+        CowEntry COW_ENTRY = new CowEntry(new CowDto(
+                UUID.fromString("2f1d156b-8dc2-4fc2-bb8c-95613f7d5251"),
+                "Mum"));
+        return new CowEntryServiceImpl(COW_ENTRY);
     }
 }

@@ -2,14 +2,23 @@ package farm.dairy.cow.service;
 
 import farm.dairy.cow.dto.CowDto;
 import farm.dairy.cow.dto.CowEntry;
+import farm.dairy.cow.repository.CowStorage;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
-import static farm.dairy.cow.repository.CowStorage.COW_ENTRY;
-
 @Service
 public class CowEntryServiceImpl implements CowEntryService {
+    protected CowEntry COW_ENTRY;
+
+    public CowEntryServiceImpl() {
+        this.COW_ENTRY = CowStorage.COW_ENTRY;
+    }
+
+    public CowEntryServiceImpl(CowEntry COW_ENTRY) {
+        this.COW_ENTRY = COW_ENTRY;
+    }
+
     public void addCalfToCow(String calfNickName, CowDto parentCow) throws Exception {
         CowEntry existedCowParent = findExistedCowEntryByCowDto(parentCow);
         CowEntry calfEntry = new CowEntry(calfNickName);
